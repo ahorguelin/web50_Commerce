@@ -1,0 +1,173 @@
+:root{
+    --night: #0C120C;
+    --tomato: #C20114;
+    --dim-gray: #6D7275;
+    --ash: #C7D6D5;
+    --ghost: #ECEBF3;
+
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2{
+    text-align: center;
+}
+
+h6{
+    max-width: 15rem;
+    text-align: left;
+}
+
+a{
+    text-decoration: none;
+    color: var(--ghost);
+}
+
+.white{
+    color: var(--ghost);
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.link-btn{
+    background: var(--ash);
+    color: var(--night);
+    display: inline-block;
+    width: 15rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+    transition: border-radius 1s;
+}
+
+a:hover{
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+article{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+
+button:hover{
+    border-radius: 10px;
+}
+
+.black{
+    background-color: var(--night);
+    color: var(--ghost)
+}
+
+.red{
+    background-color: var(--tomato);
+    color: var(--ghost);
+}
+
+form{
+    padding: 1rem;
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 25rem;
+}
+
+input{
+    width: 1fr;
+}
+
+input[type="submit"]{
+    background: var(--ash);
+    color: var(--night);
+    width: 12rem;
+}
+
+.info{
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.flex-card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 2rem;
+}
+
+.bid-amount::before{
+    content: "$";
+}
+
+.category-head{
+    margin: 1rem 1rem;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 23rem;
+    max-width: 90vw;
+}
+
+.card-img{
+    background-color: hsla(0, 12%, 79%, 0.062);
+}
+
+.card-img-top{
+    height: 18rem;
+    object-fit: cover;
+}
+
+.main-title{
+    text-transform: uppercase;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.listing-bid{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.listing-img{
+    background-color: hsla(0, 12%, 79%, 0.062);
+    border-radius: 10px;
+    width: 25rem;
+    max-width: 90vw;
+}
+
+#bid > input{
+    width: 15rem;
+}
+
+.flex-column-start{
+    padding-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex-column-start > div > p{
+    text-align: left;
+}

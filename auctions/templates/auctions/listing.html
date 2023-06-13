@@ -1,0 +1,85 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <article>
+        <div class="listing-presentation">
+            <div class="listing-title">
+                <h3>{{ listing.title }}</h3>
+            </div>
+            <div>
+                {% if listing.img %}
+                    <img src="{{ listing.img }}" class="listing-img" alt="Listing photo">
+                {% else %}
+                    <img src="../../static/auctions/no-image-1024x1024.png" class="listing-img" alt="No photo available">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="listing-bid">
+
+            {% if listing.active == False %}
+                {% if listing.winner.username == user.username %}
+                <h3>You won the item. Congratulations!</h3>
+                {%else %}
+                <h3>This listing was closed.</h3>
+                {% endif %}
+
+            {% else %}
+                {% if listing_bid %}
+                    <h3 class="bid-amount">{{ listing_bid}}</h3>
+                {% else %}
+                    <h3 class="bid-amount">{{ listing.starting_bid }}</h3>
+                {% endif %}
+            {% endif %}
+            {% for message in messages%}
+                {{ message }}
+            {% endfor %}
+
+            {% if user.is_authenticated and listing.active == True %}
+                <form id="bid" action="{% url 'bid' listing_name=listing.title %}" method="post">
+                    {% csrf_token %}
+                    {{ bid_form }}
+                    <input type="submit" class="btn btn-outline-secondary" value="Bid">
+                </form>
+            {% endif %}
+            
+            <h6 class="card-text">{{ listing.description }}</h6>
+
+            {% if user.is_authenticated and listing.active == True %}
+                {% if watcher %}
+                    <a href="{% url 'toggle_watchlist' listing_name=listing.title %}" class="link-btn red">Remove from watchlist</a>
+                {% else %}
+                    <a href="{% url 'toggle_watchlist' listing_name=listing.title %}" class="link-btn black">Add to watchlist</a>
+                {% endif %}
+
+                {% if listing.owner.username == user.username and listing.active == True %}
+                    <a class="link-btn red"href="{% url 'close' listing_name=listing.title %}">Close listing</a>
+                {% endif %}
+            {% endif %}
+
+        </div>
+
+    </article>
+
+    <div class="flex-column-start">
+        <h2>User comments</h2>
+            {% for comment in listing_comment %}
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ comment.owner.username }}</h5>
+                      <h6 class="card-subtitle text-muted">{{ comment.date }}</h6>
+                      <p class="card-text">{{ comment.text }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% if user.is_authenticated %}
+            <form action="{% url 'comment' listing_name=listing.title %}" method="post">
+                {% csrf_token %}
+                {{ comment_form }}
+                <input type="submit" class="btn btn-outline-secondary" value="Comment">
+            </form>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    
+    <div class="flex-card">
+        {% for entry in listing %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-img">
+                {% if entry.img %}
+                <a href="{% url 'view_listing' listing_name=entry.title  %}"><img src="{{ entry.img }}" class="card-img-top" alt="Listing photo"></a>
+                {% else %}
+                    <a href="{% url 'view_listing' listing_name=entry.title  %}"><img src="../../static/auctions/no-image-1024x1024.png" class="card-img-top" alt="No photo available">
+                </a>
+                {% endif %}
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'view_listing' listing_name=entry.title  %}">{{ entry.title }}</a></h5>
+                    <p class="card-text">{{ entry.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Starting bid: ${{ entry.starting_bid }}</li>
+                    {% if listing_bid %}
+    
+                        {% for bid in listing_bid %}
+    
+                            {% if bid.listing == entry.title %}
+                                <li class="list-group-item">Current bid: {{ bid.amount }}</li>
+                            {% endif %}
+    
+                        {% endfor %}
+                    
+                    {% endif %}
+                <li class="list-group-item"><a href="{% url 'category_listings' category_name=entry.category.name %}">{{ entry.category.name }}</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        {% if user.is_authenticated %}
+            <p class="info">Signed in as <strong>{{ user.username }}</strong>.</p>
+            <p class="info"><a href="{% url 'logout' %}">Log Out</a></p>
+        {% else %}
+            <p class="info">Not signed in.</p>
+        {% endif %}
+    </div>
+{% endblock %}

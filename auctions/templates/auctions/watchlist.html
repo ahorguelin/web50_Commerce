@@ -1,0 +1,43 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+    <div class="flex-card flex-start">
+        {% for listing in user_watchlist %}
+        {% if listing.active == True %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-img">
+                {% if listing.img %}
+                    <a href="{% url 'view_listing' listing_name=listing.title  %}"><img src="{{ listing.img }}" class="card-img-top" alt="Listing photo"></a>
+                {% else %}
+                    <a href="{% url 'view_listing' listing_name=listing.title  %}"><img src="../../static/auctions/no-image-1024x1024.png" class="card-img-top" alt="No photo available">
+                    </a>
+                {% endif %}
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'view_listing' listing_name=listing.title  %}">{{ listing.title }}</a></h5>
+                    <p class="card-text">{{ listing.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Starting bid: {{ listing.starting_bid }}</li>
+                    {% if listing_bid %}
+    
+                        {% for bid in listing_bid %}
+    
+                            {% if bid.listing == listing.title %}
+                                <li class="list-group-item">Current bid: {{ bid.amount }}</li>
+                            {% endif %}
+    
+                        {% endfor %}
+                    
+                    {% endif %}
+                <li class="list-group-item"><a href="{% url 'category_listings' category_name=listing.category.name %}">{{ listing.category.name }}</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
